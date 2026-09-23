@@ -546,15 +546,33 @@ function showAttendingButtons() {
             "attendingSection"
         );
 
-
     section.innerHTML = `
 
         <p>
             How many people will attend?
         </p>
 
+        <select
+            id="attendingSelect"
+            onchange="selectAttending(this.value)"
+        >
+
+            <option value="">
+                Select number
+            </option>
+
+        </select>
+
     `;
 
+    const select =
+        document.getElementById(
+            "attendingSelect"
+        );
+
+
+    // Create options from 1 up to
+    // the number of people invited
 
     for (
         let i = 1;
@@ -562,38 +580,20 @@ function showAttendingButtons() {
         i++
     ) {
 
-        const button =
+        const option =
             document.createElement(
-                "button"
+                "option"
             );
 
+        option.value = i;
 
-        button.className =
-            "attending-button";
+        option.textContent =
+            i === 1
+                ? "1 Person"
+                : i + " People";
 
-
-        button.textContent =
-            i +
-            (
-                i === 1
-                    ? " Person"
-                    : " People"
-            );
-
-
-        button.onclick =
-            function () {
-
-                selectAttending(
-                    i,
-                    button
-                );
-
-            };
-
-
-        section.appendChild(
-            button
+        select.appendChild(
+            option
         );
 
     }
@@ -601,7 +601,6 @@ function showAttendingButtons() {
 
     section.style.display =
         "block";
-
 }
 
 
