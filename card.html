@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Wedding Invitation</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            background: #f5f1eb;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            color: #3d332b;
+
+            text-align: center;
+
+        }
+
+
+        .container {
+
+            width: 100%;
+
+            max-width: 600px;
+
+            margin: auto;
+
+            padding: 20px;
+
+        }
+
+
+        /* =========================
+           INVITATION IMAGE
+           ========================= */
+
+        .invitation-image {
+
+            width: 100%;
+
+            display: block;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 8px 30px
+                rgba(0, 0, 0, 0.12);
+
+            margin-bottom: 30px;
+
+        }
+
+
+        /* =========================
+           GUEST MESSAGE
+           ========================= */
+
+        .guest-section {
+
+            background: white;
+
+            padding: 30px 20px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 5px 20px
+                rgba(0, 0, 0, 0.08);
+
+        }
+
+
+        .guest-name {
+
+            font-size: 24px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .invite-count {
+
+            font-size: 16px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        h2 {
+
+            font-size: 22px;
+
+            font-weight: normal;
+
+        }
+
+
+        /* =========================
+           BUTTONS
+           ========================= */
+
+        button {
+
+            border: none;
+
+            padding: 14px 22px;
+
+            margin: 6px;
+
+            border-radius: 30px;
+
+            font-size: 16px;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+        }
+
+
+        .yes-button {
+
+            background: #80664f;
+
+            color: white;
+
+        }
+
+
+        .no-button {
+
+            background: #e5e0da;
+
+            color: #3d332b;
+
+        }
+
+
+        button:hover {
+
+            transform: translateY(-2px);
+
+        }
+
+
+        button.selected {
+
+            outline:
+                3px solid
+                rgba(128, 102, 79, 0.3);
+
+        }
+
+
+        /* =========================
+           ATTENDING SECTION
+           ========================= */
+
+        #attendingSection {
+
+            display: none;
+
+            margin-top: 20px;
+
+        }
+
+
+        .attending-button {
+
+            background: #f0ebe5;
+
+            color: #3d332b;
+
+        }
+
+
+        /* =========================
+           MESSAGE
+           ========================= */
+
+        textarea {
+
+            width: 100%;
+
+            height: 90px;
+
+            margin-top: 20px;
+
+            padding: 12px;
+
+            border: 1px solid #ddd;
+
+            border-radius: 10px;
+
+            resize: none;
+
+            font-family: inherit;
+
+            font-size: 15px;
+
+        }
+
+
+        .submit-button {
+
+            background: #80664f;
+
+            color: white;
+
+            width: 80%;
+
+            margin-top: 20px;
+
+        }
+
+
+        .submit-button:disabled {
+
+            opacity: 0.6;
+
+            cursor: not-allowed;
+
+        }
+
+
+        /* =========================
+           SUCCESS
+           ========================= */
+
+        #success {
+
+            display: none;
+
+            padding: 30px;
+
+            background: white;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 5px 20px
+                rgba(0, 0, 0, 0.08);
+
+        }
+
+
+        #error {
+
+            display: none;
+
+            color: #a33;
+
+            margin-top: 20px;
+
+        }
+
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- =====================================
+         YOUR INVITATION IMAGE
+         ===================================== -->
+
+    <img
+        src="invitation.jpg"
+        alt="Wedding Invitation"
+        class="invitation-image"
+    >
+
+
+    <!-- =====================================
+         RSVP FORM
+         ===================================== -->
+
+    <div
+        class="guest-section"
+        id="rsvpForm"
+    >
+
+        <div class="guest-name">
+
+            Dear
+            <strong id="guestName">
+                Guest
+            </strong>
+
+        </div>
+
+
+        <div class="invite-count">
+
+            You are invited with
+
+            <strong id="inviteCount">
+                1
+            </strong>
+
+            guest(s).
+
+        </div>
+
+
+        <h2>
+
+            Will you be joining us?
+
+        </h2>
+
+
+        <button
+            class="yes-button"
+            id="yesButton"
+            onclick="selectResponse('YES')"
+        >
+
+            Yes, I'll be there ❤️
+
+        </button>
+
+
+        <button
+            class="no-button"
+            id="noButton"
+            onclick="selectResponse('NO')"
+        >
+
+            Sorry, I can't make it
+
+        </button>
+
+
+        <!-- NUMBER ATTENDING -->
+
+        <div id="attendingSection">
+
+            <p>
+
+                How many people will attend?
+
+            </p>
+
+        </div>
+
+
+        <!-- OPTIONAL MESSAGE -->
+
+        <textarea
+            id="message"
+            placeholder="Optional message..."
+        ></textarea>
+
+
+        <br>
+
+
+        <button
+            class="submit-button"
+            id="submitButton"
+            onclick="submitRSVP()"
+        >
+
+            Submit RSVP
+
+        </button>
+
+
+        <div id="error"></div>
+
+    </div>
+
+
+    <!-- =====================================
+         SUCCESS MESSAGE
+         ===================================== -->
+
+    <div id="success">
+
+        <h2>
+            Thank You ❤️
+        </h2>
+
+        <p>
+            Your RSVP has been received.
+        </p>
+
+        <p>
+            We look forward to celebrating with you!
+        </p>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+/* ==========================================
+   GOOGLE APPS SCRIPT URL
+   ========================================== */
+
+const BACKEND_URL =
+    "PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+
+
+/* ==========================================
+   READ URL PARAMETERS
+   ========================================== */
+
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+
+const guestName =
+    params.get("name")
+    || "Guest";
+
+
+const invited =
+    parseInt(
+        params.get("n")
+    )
+    || 1;
+
+
+/* ==========================================
+   VARIABLES
+   ========================================== */
+
+let response = "";
+
+let attending = 0;
+
+
+/* ==========================================
+   DISPLAY GUEST
+   ========================================== */
+
+document.getElementById(
+    "guestName"
+).textContent =
+    decodeURIComponent(
+        guestName
+    );
+
+
+document.getElementById(
+    "inviteCount"
+).textContent =
+    invited;
+
+
+/* ==========================================
+   SELECT YES / NO
+   ========================================== */
+
+function selectResponse(answer) {
+
+    response = answer;
+
+
+    document
+        .getElementById("yesButton")
+        .classList.remove("selected");
+
+
+    document
+        .getElementById("noButton")
+        .classList.remove("selected");
+
+
+    if (answer === "YES") {
+
+        document
+            .getElementById("yesButton")
+            .classList.add("selected");
+
+
+        showAttendingButtons();
+
+    }
+
+
+    if (answer === "NO") {
+
+        document
+            .getElementById("noButton")
+            .classList.add("selected");
+
+
+        attending = 0;
+
+
+        document
+            .getElementById(
+                "attendingSection"
+            )
+            .style.display = "none";
+
+    }
+
+}
+
+
+/* ==========================================
+   SHOW NUMBER OF ATTENDEES
+   ========================================== */
+
+function showAttendingButtons() {
+
+    const section =
+        document.getElementById(
+            "attendingSection"
+        );
+
+
+    section.innerHTML = `
+
+        <p>
+            How many people will attend?
+        </p>
+
+    `;
+
+
+    for (
+        let i = 1;
+        i <= invited;
+        i++
+    ) {
+
+        const button =
+            document.createElement(
+                "button"
+            );
+
+
+        button.className =
+            "attending-button";
+
+
+        button.textContent =
+            i +
+            (
+                i === 1
+                    ? " Person"
+                    : " People"
+            );
+
+
+        button.onclick =
+            function () {
+
+                selectAttending(
+                    i,
+                    button
+                );
+
+            };
+
+
+        section.appendChild(
+            button
+        );
+
+    }
+
+
+    section.style.display =
+        "block";
+
+}
+
+
+/* ==========================================
+   SELECT NUMBER ATTENDING
+   ========================================== */
+
+function selectAttending(
+    number,
+    button
+) {
+
+    attending = number;
+
+
+    document
+        .querySelectorAll(
+            ".attending-button"
+        )
+        .forEach(
+            function (btn) {
+
+                btn.classList.remove(
+                    "selected"
+                );
+
+            }
+        );
+
+
+    button.classList.add(
+        "selected"
+    );
+
+}
+
+
+/* ==========================================
+   SUBMIT RSVP
+   ========================================== */
+
+async function submitRSVP() {
+
+
+    /* -----------------------------
+       Validate response
+       ----------------------------- */
+
+    if (!response) {
+
+        showError(
+            "Please select Yes or No."
+        );
+
+        return;
+
+    }
+
+
+    /* -----------------------------
+       Validate attending
+       ----------------------------- */
+
+    if (
+        response === "YES" &&
+        attending === 0
+    ) {
+
+        showError(
+            "Please select the number of people attending."
+        );
+
+        return;
+
+    }
+
+
+    const message =
+        document
+            .getElementById(
+                "message"
+            )
+            .value;
+
+
+    const button =
+        document
+            .getElementById(
+                "submitButton"
+            );
+
+
+    button.disabled = true;
+
+    button.textContent =
+        "Submitting...";
+
+
+    /* -----------------------------
+       Data sent to Google
+       ----------------------------- */
+
+    const data = {
+
+        name:
+            decodeURIComponent(
+                guestName
+            ),
+
+        invited:
+            invited,
+
+        response:
+            response,
+
+        attending:
+            attending,
+
+        message:
+            message
+
+    };
+
+
+    try {
+
+
+        await fetch(
+            BACKEND_URL,
+            {
+
+                method: "POST",
+
+                mode: "no-cors",
+
+                headers: {
+
+                    "Content-Type":
+                        "text/plain;charset=utf-8"
+
+                },
+
+                body:
+                    JSON.stringify(
+                        data
+                    )
+
+            }
+        );
+
+
+        /* -----------------------------
+           Show success
+           ----------------------------- */
+
+        document
+            .getElementById(
+                "rsvpForm"
+            )
+            .style.display =
+                "none";
+
+
+        document
+            .getElementById(
+                "success"
+            )
+            .style.display =
+                "block";
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        showError(
+            "Something went wrong. Please try again."
+        );
+
+
+        button.disabled =
+            false;
+
+
+        button.textContent =
+            "Submit RSVP";
+
+    }
+
+}
+
+
+/* ==========================================
+   ERROR MESSAGE
+   ========================================== */
+
+function showError(message) {
+
+    const error =
+        document.getElementById(
+            "error"
+        );
+
+
+    error.textContent =
+        message;
+
+
+    error.style.display =
+        "block";
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
