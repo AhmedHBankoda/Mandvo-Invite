@@ -87,7 +87,29 @@
                 rgba(0, 0, 0, 0.08);
 
         }
+#attendingSelect {
 
+    width: 80%;
+
+    max-width: 300px;
+
+    padding: 14px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 10px;
+
+    background: white;
+
+    color: #3d332b;
+
+    font-size: 16px;
+
+    font-family: inherit;
+
+    cursor: pointer;
+
+}
 
         .guest-name {
 
@@ -608,35 +630,19 @@ function showAttendingButtons() {
    SELECT NUMBER ATTENDING
    ========================================== */
 
-function selectAttending(
-    number,
-    button
-) {
+function selectAttending(number) {
 
-    attending = number;
+    if (number === "") {
 
+        attending = 0;
 
-    document
-        .querySelectorAll(
-            ".attending-button"
-        )
-        .forEach(
-            function (btn) {
+        return;
+    }
 
-                btn.classList.remove(
-                    "selected"
-                );
-
-            }
-        );
-
-
-    button.classList.add(
-        "selected"
-    );
+    attending =
+        parseInt(number);
 
 }
-
 
 /* ==========================================
    SUBMIT RSVP
